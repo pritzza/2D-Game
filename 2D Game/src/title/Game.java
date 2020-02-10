@@ -1,14 +1,15 @@
 package src.title;
 
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.awt.Graphics;
-import java.awt.Color;
 
-import src.title.gfx.ImageLoader;
 import src.title.display.Display;
-import src.title.gfx.SpriteSheet;
 import src.title.gfx.Assets;
+
+import src.title.states.State;
+import src.title.states.GameState;
+
+import src.title.input.KeyManager;;
 
 public class Game implements Runnable {
 
@@ -22,22 +23,40 @@ public class Game implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
 
+    //States
+    private State gameState;
+    private State menuState;
+
+    //Input
+    private KeyManager keyManager;
+
     public Game(String title, int width, int height) {
 
         this.width = width;
         this.height = height;
         this.title = title;
+        keyManager = new KeyManager();
 
     }
 
     private void init() {
 
         display = new Display(title, width, height);
+        display.getFrame().addKeyListener(keyManager);
         Assets.init();
+
+        gameState = new GameState(this);
+        menuState = new GameState(this);
+        State.setState(gameState);
 
     }
 
     private void tick() {
+        keyManager.tick();
+
+        if(State.getState() != null) {
+            State.getState().tick();
+        }
 
     }
 
@@ -53,7 +72,10 @@ public class Game implements Runnable {
 
         g.clearRect(0, 0, width, height);
 
-        g.drawImage(Assets.grass, 10, 10, null);
+        if(State.getState() != null) {
+
+            State.getState().render(g);
+        }
 
         bs.show();
         g.dispose();
@@ -94,6 +116,12 @@ public class Game implements Runnable {
         }
 
         stop();
+    }
+
+    public KeyManager getKeyManager() {
+
+        return keyManager;
+
     }
 
     public synchronized void start() {
