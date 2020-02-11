@@ -23,7 +23,6 @@ public class MenuState extends State{
     @Override
     public void render(Graphics g){
 
-        g.drawImage(Assets.guy, 100, 100, null);
 
     }
 }

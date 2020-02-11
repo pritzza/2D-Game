@@ -5,16 +5,15 @@ import java.awt.Graphics;
 
 import src.title.display.Display;
 import src.title.gfx.Assets;
-
 import src.title.states.State;
 import src.title.states.GameState;
-
-import src.title.input.KeyManager;;
+import src.title.input.KeyManager;
+import src.title.gfx.GameCamera;
 
 public class Game implements Runnable {
 
     private Display display;
-    public int width, height;
+    private int width, height;
     public String title;
 
     private boolean running;
@@ -23,12 +22,15 @@ public class Game implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
 
-    //States
+    // States
     private State gameState;
     private State menuState;
 
-    //Input
+    // Input
     private KeyManager keyManager;
+
+    // Camera
+    private GameCamera gameCamera;
 
     public Game(String title, int width, int height) {
 
@@ -45,6 +47,8 @@ public class Game implements Runnable {
         display.getFrame().addKeyListener(keyManager);
         Assets.init();
 
+        gameCamera = new GameCamera(this, 0, 0);
+
         gameState = new GameState(this);
         menuState = new GameState(this);
         State.setState(gameState);
@@ -54,7 +58,7 @@ public class Game implements Runnable {
     private void tick() {
         keyManager.tick();
 
-        if(State.getState() != null) {
+        if (State.getState() != null) {
             State.getState().tick();
         }
 
@@ -72,7 +76,7 @@ public class Game implements Runnable {
 
         g.clearRect(0, 0, width, height);
 
-        if(State.getState() != null) {
+        if (State.getState() != null) {
 
             State.getState().render(g);
         }
@@ -107,7 +111,6 @@ public class Game implements Runnable {
             }
 
             if (timer >= 1000000000) {
-
                 System.out.println("Ticks and Frames: " + ticks);
                 ticks = 0;
                 timer = 0;
@@ -122,6 +125,20 @@ public class Game implements Runnable {
 
         return keyManager;
 
+    }
+
+    public GameCamera getGameCamera() {
+
+        return gameCamera;
+
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public synchronized void start() {

@@ -13,8 +13,8 @@ public class GameState extends State{
 
     public GameState(Game game) {
         super(game);
-        player = new Player(game, 600, 350, 0, 0);
-        world = new World("src/title/worlds/world1");
+        player = new Player(game, 1000, 1000, 0, 0);
+        world = new World(game, "src/title/worlds/world1");
 
     }
 
