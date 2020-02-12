@@ -6,7 +6,7 @@ public class Assets {
 
     private static final int width = 8, height = 8;
 
-    public static BufferedImage player, grass, rock, sand, water;
+    public static BufferedImage player, grass, rock, sand, water, dirt;
     
     public static void init() {
 
@@ -17,6 +17,8 @@ public class Assets {
         rock = sheet.crop(width * 6, height * 2, width * 2, height * 2);
         sand = sheet.crop(width * 6, height * 4, width * 2, height * 2);
         water = sheet.crop(width * 6, height * 0, width * 2, height * 2);
+        dirt = sheet.crop(width * 6, height * 8, width * 2, height * 2);
+
 
     }
 }
