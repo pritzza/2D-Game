@@ -13,12 +13,20 @@ public class Tile {
     public static Tile sandTile = new SandTile(2);
     public static Tile waterTile = new WaterTile(3);
     public static Tile dirtTile = new DirtTile(4);
+    public static Tile thickgrassTile = new ThickgrassTile(5);
+    public static Tile BushTile = new BushTile(6);
+    public static Tile darkrockTile = new DarkrockTile(7);
+    public static Tile deepwaterTile = new DeepwaterTile(8);
+
+
+
 
     //CLASS
 
     //SCALE OF TILES
     public static final int TILEWIDTH = 64;
-    public static final int TILEHEIGHT = 64;
+    public static final int TILEHEIGHT = 64
+    ;
 
     protected BufferedImage texture;
     protected final int id;
